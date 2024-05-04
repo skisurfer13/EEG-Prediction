@@ -7,6 +7,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pickle
 from sklearn.metrics import accuracy_score
+import requests
+import zipfile
+import os
 
 st.title("Epi-Sense Visualization")
 
@@ -27,8 +30,34 @@ def load_eeg_data(base_dir):
                 y.append(labels[category])
     return np.array(X), np.array(y)
 
-# Load the EEG data
-base_dir = 'EEG_Epilepsy_Datasets'
+
+
+# URL to download the zipped dataset
+url = "https://drive.google.com/uc?export=download&id=1Y0Cw2emtNxQX0Ei47rbR33Da9Yeqt39L"
+zip_filename = "dataset.zip"
+
+# Function to download the file from the URL
+def download_file(url, local_filename):
+    with requests.get(url, stream=True) as r:
+        r.raise_for_status()
+        with open(local_filename, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192):
+                f.write(chunk)
+
+# Download the zipped dataset
+download_file(url, zip_filename)
+
+# Extract the zipped dataset
+extracted_folder = "EEG_Epilepsy_Datasets"
+with zipfile.ZipFile(zip_filename, 'r') as zip_ref:
+    zip_ref.extractall(extracted_folder)
+
+# Remove the zip file after extraction
+os.remove(zip_filename)
+
+# Now you can use the extracted data
+base_dir = extracted_folder
+
 X, y = load_eeg_data(base_dir)
 
 # Load y_test
