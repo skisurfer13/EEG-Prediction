@@ -7,19 +7,15 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pickle
 from sklearn.metrics import accuracy_score
-import requests
+import gdown
 import zipfile
 
 st.title("Epi-Sense Visualization")
 
-# Function to download and extract the zip file from Google Drive
+# Function to download and extract the zip file from Google Drive using gdown
 def download_and_extract_zip(file_id, zip_filename, extract_to):
     download_url = f"https://drive.google.com/uc?export=download&id={file_id}"
-    with requests.get(download_url, stream=True) as r:
-        r.raise_for_status()
-        with open(zip_filename, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=8192):
-                f.write(chunk)
+    gdown.download(download_url, zip_filename, quiet=False)
     with zipfile.ZipFile(zip_filename, 'r') as zip_ref:
         zip_ref.extractall(extract_to)
     os.remove(zip_filename)
