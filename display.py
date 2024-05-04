@@ -9,82 +9,70 @@ import pickle
 from sklearn.metrics import accuracy_score
 import requests
 import zipfile
-import os
 
 st.title("Epi-Sense Visualization")
 
-# Load the EEG data
+# Function to download and extract the zip file from Google Drive
+def download_and_extract_zip(url, zip_filename, extract_to):
+    with requests.get(url, stream=True) as r:
+        r.raise_for_status()
+        with open(zip_filename, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192):
+                f.write(chunk)
+    with zipfile.ZipFile(zip_filename, 'r') as zip_ref:
+        zip_ref.extractall(extract_to)
+    os.remove(zip_filename)
+
+# Load the EEG data from the extracted folder
 def load_eeg_data(base_dir):
     categories = ['preictal', 'interictal', 'ictal']
     labels = {'preictal': 0, 'interictal': 1, 'ictal': 2}
-    X = []  # Raw Data Matrix 
+    X = []  # Raw Data Matrix
     y = []  # Label vector
     for category in categories:
         cat_dir = os.path.join(base_dir, category)
-        for file in os.listdir(cat_dir):
-            file_path = os.path.join(cat_dir, file)
-            if file.endswith('.mat'):
-                mat_data = scipy.io.loadmat(file_path)
-                data = mat_data[category]
-                X.append(data.flatten())  # Flatten the EEG segment
-                y.append(labels[category])
+        if os.path.exists(cat_dir):
+            for file in os.listdir(cat_dir):
+                file_path = os.path.join(cat_dir, file)
+                if file.endswith('.mat'):
+                    mat_data = scipy.io.loadmat(file_path)
+                    data = mat_data.get(category)
+                    if data is not None:
+                        X.append(data.flatten())  # Flatten the EEG segment
+                        y.append(labels[category])
+        else:
+            print(f"Directory {cat_dir} does not exist!")
     return np.array(X), np.array(y)
 
-
-
-# URL to download the zipped dataset
-url = "https://drive.google.com/uc?export=download&id=1Y0Cw2emtNxQX0Ei47rbR33Da9Yeqt39L"
+# Download and extract dataset
+zip_url = "https://drive.google.com/uc?export=download&id=1Y0Cw2emtNxQX0Ei47rbR33Da9Yeqt39L"
 zip_filename = "dataset.zip"
-
-# Function to download the file from the URL
-def download_file(url, local_filename):
-    with requests.get(url, stream=True) as r:
-        r.raise_for_status()
-        with open(local_filename, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=8192):
-                f.write(chunk)
-
-# Download the zipped dataset
-download_file(url, zip_filename)
-
-# Extract the zipped dataset
 extracted_folder = "EEG_Epilepsy_Datasets"
-with zipfile.ZipFile(zip_filename, 'r') as zip_ref:
-    zip_ref.extractall(extracted_folder)
+if not os.path.exists(extracted_folder):
+    download_and_extract_zip(zip_url, zip_filename, extracted_folder)
 
-# Remove the zip file after extraction
-os.remove(zip_filename)
-
-# Now you can use the extracted data
-base_dir = extracted_folder
-
-X, y = load_eeg_data(base_dir)
+# Load the EEG data
+X, y = load_eeg_data(extracted_folder)
 
 # Load y_test
 with open('y_test.pkl', 'rb') as f:
     y_test = pickle.load(f)
 
-
 def load_results(file_path):
     return pd.read_pickle(file_path)
-
 
 def calculate_and_display_fusion_prediction(index, results_dfs):
     class_labels = {0: 'Preictal', 1: 'Interictal', 2: 'Ictal'}
     cumulative_probabilities = [0] * len(class_labels)
-    
     for df in results_dfs.values():
         probabilities = df.iloc[index]['Probabilities']
         cumulative_probabilities = [sum(x) for x in zip(cumulative_probabilities, probabilities)]
-    
     averaged_probabilities = [prob / len(results_dfs) for prob in cumulative_probabilities]
     final_predicted_class_index = averaged_probabilities.index(max(averaged_probabilities))
     return final_predicted_class_index, averaged_probabilities
 
-
 def display_fusion_prediction(index, results_dfs):
     predicted_class_index, averaged_probabilities = calculate_and_display_fusion_prediction(index, results_dfs)
-    
     class_labels = {0: 'Preictal', 1: 'Interictal', 2: 'Ictal'}
     correct_label = class_labels[y_test[index]]
     predicted_class = class_labels[predicted_class_index]
@@ -124,7 +112,6 @@ def display_fusion_prediction(index, results_dfs):
     ax.spines['left'].set_color('white')
     ax.spines['right'].set_color('white')
     st.pyplot(fig)
-
 
 # Load data from all models
 models = ['rf', 'ada']
