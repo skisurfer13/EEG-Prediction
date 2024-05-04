@@ -46,7 +46,7 @@ def load_eeg_data(base_dir):
     return np.array(X), np.array(y)
 
 # Load the EEG data
-base_dir = '/Users/rahulc/Downloads/EEG_Epilepsy_Datasets'
+base_dir = 'EEG_Epilepsy_Datasets'
 X, y = load_eeg_data(base_dir)
 
 
