@@ -31,8 +31,11 @@ def load_eeg_data(base_dir):
     y = []  # Label vector
     for category in categories:
         cat_dir = os.path.join(base_dir, category)
+        print(f"Checking directory: {cat_dir}")
         if os.path.exists(cat_dir):
+            print(f"Directory exists: {cat_dir}")
             for file in os.listdir(cat_dir):
+                print(f"Processing file: {file}")
                 file_path = os.path.join(cat_dir, file)
                 if file.endswith('.mat'):
                     mat_data = scipy.io.loadmat(file_path)
