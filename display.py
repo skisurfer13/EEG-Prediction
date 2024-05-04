@@ -6,9 +6,13 @@ import scipy.io
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pickle
-from sklearn.metrics import accuracy_score
 import gdown
 import zipfile
+import logging
+
+# Set up logging
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 st.title("Epi-Sense Visualization")
 
@@ -26,17 +30,17 @@ def load_eeg_data(base_dir):
     labels = {'preictal': 0, 'interictal': 1, 'ictal': 2}
     X = []  # Raw Data Matrix
     y = []  # Label vector
-    print(f"Checking base directory: {base_dir}")
+    logger.info(f"Checking base directory: {base_dir}")
     if not os.path.exists(base_dir):
-        print(f"Directory {base_dir} does not exist!")
+        logger.error(f"Directory {base_dir} does not exist!")
         return np.array([]), np.array([])
 
     for category in categories:
         cat_dir = os.path.join(base_dir, category)
-        print(f"Checking category directory: {cat_dir}")
+        logger.info(f"Checking category directory: {cat_dir}")
         if os.path.exists(cat_dir):
             for file in os.listdir(cat_dir):
-                print(f"Processing file: {file}")
+                logger.info(f"Processing file: {file}")
                 file_path = os.path.join(cat_dir, file)
                 if file.endswith('.mat'):
                     mat_data = scipy.io.loadmat(file_path)
@@ -44,8 +48,10 @@ def load_eeg_data(base_dir):
                     if data is not None:
                         X.append(data.flatten())  # Flatten the EEG segment
                         y.append(labels[category])
+                    else:
+                        logger.warning(f"No data found in {file_path} for category '{category}'")
         else:
-            print(f"Directory {cat_dir} does not exist!")
+            logger.error(f"Directory {cat_dir} does not exist!")
     return np.array(X), np.array(y)
 
 # Download and extract dataset
