@@ -37,7 +37,9 @@ def load_eeg_data(base_dir):
                 if file.endswith('.mat'):
                     mat_data = scipy.io.loadmat(file_path)
                     data = mat_data.get(category)
-                    if data is not None:
+                    if data is None:
+                        print(f"Data not found in {file_path}")
+                    else:
                         X.append(data.flatten())  # Flatten the EEG segment
                         y.append(labels[category])
         else:
@@ -53,6 +55,11 @@ if not os.path.exists(extracted_folder):
 
 # Load the EEG data
 X, y = load_eeg_data(extracted_folder)
+
+if X.size == 0 or y.size == 0:
+    st.error("No EEG data found. Please check if the files were downloaded correctly.")
+else:
+    st.write(f"Loaded {len(X)} samples of EEG data.")
 
 # Load y_test
 with open('y_test.pkl', 'rb') as f:
@@ -125,8 +132,8 @@ if 'show_fusion' not in st.session_state:
     st.session_state['show_fusion'] = False
 
 # Limit the sample index to the first 30 samples
-if 'X' in globals() and 'y' in globals():
-    sample_index = st.slider('Select Test Sample Index', 0, 29, 0)
+if X.size > 0 and y.size > 0:
+    sample_index = st.slider('Select Test Sample Index', 0, len(X)-1, 0)
     
     if st.button('Show EEG Sample & Fusion Prediction'):
         st.session_state['show_fusion'] = True
