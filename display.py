@@ -13,8 +13,9 @@ import zipfile
 st.title("Epi-Sense Visualization")
 
 # Function to download and extract the zip file from Google Drive
-def download_and_extract_zip(url, zip_filename, extract_to):
-    with requests.get(url, stream=True) as r:
+def download_and_extract_zip(file_id, zip_filename, extract_to):
+    download_url = f"https://drive.google.com/uc?export=download&id={file_id}"
+    with requests.get(download_url, stream=True) as r:
         r.raise_for_status()
         with open(zip_filename, 'wb') as f:
             for chunk in r.iter_content(chunk_size=8192):
@@ -31,30 +32,23 @@ def load_eeg_data(base_dir):
     y = []  # Label vector
     for category in categories:
         cat_dir = os.path.join(base_dir, category)
-        print(f"Checking directory: {cat_dir}")
         if os.path.exists(cat_dir):
-            print(f"Directory exists: {cat_dir}")
             for file in os.listdir(cat_dir):
-                print(f"Processing file: {file}")
                 file_path = os.path.join(cat_dir, file)
                 if file.endswith('.mat'):
                     mat_data = scipy.io.loadmat(file_path)
                     data = mat_data.get(category)
-                    if data is None:
-                        print(f"Data not found in {file_path}")
-                    else:
+                    if data is not None:
                         X.append(data.flatten())  # Flatten the EEG segment
                         y.append(labels[category])
-        else:
-            print(f"Directory {cat_dir} does not exist!")
     return np.array(X), np.array(y)
 
 # Download and extract dataset
-zip_url = "https://drive.google.com/uc?export=download&id=1Y0Cw2emtNxQX0Ei47rbR33Da9Yeqt39L"
-zip_filename = "dataset.zip"
+file_id = "1Y0Cw2emtNxQX0Ei47rbR33Da9Yeqt39L"  # File ID extracted from the Google Drive link
+zip_filename = "EEG_Epilepsy_Datasets.zip"
 extracted_folder = "EEG_Epilepsy_Datasets"
 if not os.path.exists(extracted_folder):
-    download_and_extract_zip(zip_url, zip_filename, extracted_folder)
+    download_and_extract_zip(file_id, zip_filename, extracted_folder)
 
 # Load the EEG data
 X, y = load_eeg_data(extracted_folder)
@@ -63,8 +57,6 @@ if X.size == 0 or y.size == 0:
     st.error("No EEG data found. Please check if the files were downloaded correctly.")
 else:
     st.write(f"Loaded {len(X)} samples of EEG data.")
-
-
 
 # Load y_test
 with open('y_test.pkl', 'rb') as f:
