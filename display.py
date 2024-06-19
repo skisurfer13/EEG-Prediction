@@ -74,8 +74,7 @@ X, y = load_eeg_data(extracted_folder)
 
 if X.size == 0 or y.size == 0:
     st.error("No EEG data found. Please check if the files were downloaded correctly.")
-else:
-    st.write(f"Select Test Sample Index")
+
 
 # Load y_test
 with open('y_test.pkl', 'rb') as f:
