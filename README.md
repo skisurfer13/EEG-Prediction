@@ -14,4 +14,4 @@ Additional files:
   y_test.pkl - pickle file containing answer key for fusion code performance metrics
   pklreader.py - to help load in and view pickle files for user convenience 
   
-This is the link to the visualization website hosted by Streamlit: https://aims24-irsjnqnuzhdveg84yns6eq.streamlit.app/
+Click here to see it in action: https://aims24-irsjnqnuzhdveg84yns6eq.streamlit.app/
