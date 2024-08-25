@@ -1,17 +1,86 @@
-# AIM-S24-EEG-Project
 
-This repo was made for the Spring AIM 2024 (AI Mentorship) Program. The project was a mix of theory and practical application. It classifies EEG Data to determine whether the given electrical signal is in the seizure state (ictal), preseizure state (preictal), or between seizures state (interictal). It is made up of 4 parts:
+---
 
-  1. Individual model files - CNN, KNN, RF, SVM, and ADABoost. Each has a .py extension following it. Each mentee worked on one.
-  2. Fusion model - Aggregates the five models using the probability averaging ensembling technique to come up with a final prediction. Performed in display.py
-  3. Pickle Files - Each model has a corresponding pickle file (model_pred.pkl) which contains the models predictions for the test data. These were made to increase speed for presentation purposes only (instead of needing to wait for each model to finish running). To generate new pickle files (i.e. store new predictions), simply run the desired model.
-  4. Visualization - Also performed in display.py. Works in conjunction with streamlit for cloud deployment.
+# EEG-Prediction: Epi-Sense Visualization with Advanced Statistical Analysis
 
+[![Streamlit App](https://img.shields.io/badge/Streamlit-Launch%20App-brightgreen?style=flat-square)](https://eeg-prediction-nnzmjq3bpqkxwbr8zt7unt.streamlit.app/)  
+[![GitHub issues](https://img.shields.io/github/issues/skisurfer13/EEG-Prediction)](https://github.com/skisurfer13/EEG-Prediction/issues)  
+[![GitHub forks](https://img.shields.io/github/forks/skisurfer13/EEG-Prediction)](https://github.com/skisurfer13/EEG-Prediction/network)  
+[![GitHub stars](https://img.shields.io/github/stars/skisurfer13/EEG-Prediction)](https://github.com/skisurfer13/EEG-Prediction/stargazers)
 
-Additional files:
-  requirements.txt - config file for streamlit
-  cnn_model.pth - architecture code for cnn
-  y_test.pkl - pickle file containing answer key for fusion code performance metrics
-  pklreader.py - to help load in and view pickle files for user convenience 
-  
-Click here to see it in action: https://aims24-irsjnqnuzhdveg84yns6eq.streamlit.app/
+## 🧠 Overview
+
+The **EEG-Prediction** project, also known as **Epi-Sense**, focuses on classifying EEG signals into seizure states: **preictal**, **interictal**, and **ictal**. This project combines advanced machine learning, statistical analysis, and signal processing techniques to provide a robust, interactive, and educational tool for EEG analysis.
+
+The project is designed to:
+- Visualize raw EEG data.
+- Apply various machine learning models.
+- Perform in-depth statistical analysis.
+- Provide an intuitive interface for exploring and understanding the EEG data.
+
+## 🎯 Key Features
+
+1. **EEG Fusion Prediction**  
+   Utilize a fusion of machine learning models (CNN, KNN, RF, SVM, AdaBoost) to classify EEG signals. The fusion approach improves accuracy by averaging predictions from multiple models, ensuring robustness against individual model weaknesses.
+
+2. **Exploratory Data Analysis (EDA)**  
+   Perform in-depth analysis of the EEG data, including stationarity tests, frequency domain analysis, and extraction of statistical features. The EDA section provides crucial insights into the data's characteristics, guiding model selection and analysis.
+
+3. **Signal Processing and Noise Reduction**  
+   Apply band-pass filtering to clean EEG signals, focusing on relevant frequency bands (0.5–50 Hz). Visualize the filtered data and observe the impact of noise reduction on signal clarity.
+
+4. **Bayesian Inference and Probabilistic Models**  
+   Implement Bayesian Ridge Regression to make probabilistic predictions. Visualize the posterior distributions and understand the uncertainty in predictions, crucial for medical decision-making.
+
+5. **Survival Analysis**  
+   Model seizure occurrence patterns using Kaplan-Meier analysis. Understand the probability of remaining seizure-free over time, providing valuable insights for epilepsy management.
+
+6. **Advanced Data Analysis and Model Insights** (🚧 Under Testing)  
+   Explore advanced visualizations such as correlation heatmaps, time-series analysis, and hyperparameter tuning heatmaps. Note that this section is under testing due to potential app crashes.
+
+7. **Statistical Hypothesis Testing**  
+   Conduct an ANOVA test to determine whether the means of the three EEG classes (preictal, interictal, ictal) are significantly different. Visualize the test results with boxplots and interpret the statistical significance.
+
+## 🖥️ App Demo
+
+[Launch the Streamlit App](https://eeg-prediction-nnzmjq3bpqkxwbr8zt7unt.streamlit.app/) to explore the interactive visualizations and analyses.
+
+## 📝 Project Structure
+
+- **`display.py`**: Main Streamlit app file.
+- **Data**: EEG data is automatically downloaded and preprocessed for analysis.
+- **Models & Predictions**: Pre-trained models and their predictions are included for demonstration purposes.
+
+## 🚀 Getting Started
+
+To run this project locally, follow these steps:
+
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/skisurfer13/EEG-Prediction.git
+    ```
+2. **Install dependencies**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+3. **Run the Streamlit app**:
+    ```bash
+    streamlit run display.py
+    ```
+
+## ⚠️ Known Issues
+
+- The **Advanced Data Analysis and Model Insights** section is under testing and may cause app crashes due to time limitations and resource constraints.
+
+## 📊 Future Improvements
+
+- Real-time EEG data streaming support.
+- Enhanced model interpretability with additional visual explanations.
+- Integration of additional classification models and advanced ensembling techniques.
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! 
+
+---
+
