@@ -3,11 +3,6 @@
 
 # EEG-Prediction: Epi-Sense Visualization with Advanced Statistical Analysis
 
-[![Streamlit App](https://img.shields.io/badge/Streamlit-Launch%20App-brightgreen?style=flat-square)](https://eeg-prediction-nnzmjq3bpqkxwbr8zt7unt.streamlit.app/)  
-[![GitHub issues](https://img.shields.io/github/issues/skisurfer13/EEG-Prediction)](https://github.com/skisurfer13/EEG-Prediction/issues)  
-[![GitHub forks](https://img.shields.io/github/forks/skisurfer13/EEG-Prediction)](https://github.com/skisurfer13/EEG-Prediction/network)  
-[![GitHub stars](https://img.shields.io/github/stars/skisurfer13/EEG-Prediction)](https://github.com/skisurfer13/EEG-Prediction/stargazers)
-
 ## 🧠 Overview
 
 The **EEG-Prediction** project, also known as **Epi-Sense**, focuses on classifying EEG signals into seizure states: **preictal**, **interictal**, and **ictal**. This project combines advanced machine learning, statistical analysis, and signal processing techniques to provide a robust, interactive, and educational tool for EEG analysis.
