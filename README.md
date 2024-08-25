@@ -4,7 +4,7 @@
 # EEG-Prediction: Epi-Sense Visualization with Advanced Statistical Analysis
 ## 🧠 Overview
 
-The **EEG-Prediction** project, also known as **Epi-Sense**, focuses on classifying EEG signals into seizure states: **preictal**, **interictal**, and **ictal**. This project combines advanced machine learning, statistical analysis, and signal processing techniques to provide a robust, interactive, and educational tool for EEG analysis.
+The **EEG-Prediction** project, also known as **Epi-Sense**, focuses on classifying EEG signals into seizure states: **preictal**, **interictal**, and **ictal**. This project combines machine learning, statistical analysis, and signal processing techniques to provide a robust, interactive, and educational tool for EEG analysis.
 
 The project is designed to:
 - Visualize raw EEG data.
