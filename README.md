@@ -29,8 +29,8 @@ The project is designed to:
 5. **Survival Analysis**  
    Model seizure occurrence patterns using Kaplan-Meier analysis. Understand the probability of remaining seizure-free over time, providing valuable insights for epilepsy management.
 
-6. **Advanced Data Analysis and Model Insights** (🚧 Under Testing)  
-   Explore advanced visualizations such as correlation heatmaps, time-series analysis, and hyperparameter tuning heatmaps. Note that this section is under testing due to potential app crashes.
+6. **Advanced Data Analysis and Model Insights**  
+   Explore advanced visualizations such as correlation heatmaps, time-series analysis, and hyperparameter tuning heatmaps. 
 
 7. **Statistical Hypothesis Testing**  
    Conduct an ANOVA test to determine whether the means of the three EEG classes (preictal, interictal, ictal) are significantly different. Visualize the test results with boxplots and interpret the statistical significance.
@@ -38,10 +38,6 @@ The project is designed to:
 ## 🖥️ App Demo
 
 [Launch the Streamlit App](https://eeg-prediction-nnzmjq3bpqkxwbr8zt7unt.streamlit.app/) to explore the interactive visualizations and analyses.
-
-## ⚠️ Known Issues
-
-- The **Advanced Data Analysis and Model Insights** section is under testing and may cause app crashes due to TLEs.
 
 ## 📊 Future Improvements
 
