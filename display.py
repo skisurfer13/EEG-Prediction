@@ -387,14 +387,22 @@ elif section == "Advanced Data Analysis and Model Insights":
 
     st.markdown("""
     **Overview:**  
-    This section provides comprehensive insights into the data and model performance through various visualizations, including correlation analysis, time-series exploration, and hyperparameter tuning evaluations. Currently modifying and testing this section as it often causes app crashes due to TLEs 
+    This section provides comprehensive insights into the data and model performance through various visualizations, including correlation analysis, time-series exploration, and hyperparameter tuning evaluations. The analysis is optimized to prevent app crashes by reducing the number of features based on correlation thresholds.
     """)
 
-    def plot_correlation_heatmap(X):
+    def plot_correlation_heatmap(X, threshold=0.8):
+        # Calculate the correlation matrix
         corr_matrix = pd.DataFrame(X).corr()
+
+        # Filter features with high correlations based on the threshold
+        upper_tri = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(np.bool))
+        to_drop = [column for column in upper_tri.columns if any(upper_tri[column].abs() > threshold)]
+        filtered_corr_matrix = corr_matrix.drop(columns=to_drop, index=to_drop)
+
+        # Plot the filtered correlation heatmap
         fig, ax = plt.subplots(figsize=(10, 6))
-        sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", ax=ax)
-        ax.set_title("Feature Correlation Heatmap")
+        sns.heatmap(filtered_corr_matrix, annot=True, cmap="coolwarm", ax=ax)
+        ax.set_title(f"Feature Correlation Heatmap (Threshold: {threshold})")
         st.pyplot(fig)
 
     def plot_time_series_analysis(X, y, sample_index):
@@ -426,10 +434,13 @@ elif section == "Advanced Data Analysis and Model Insights":
     # Sample index for time-series analysis
     sample_index = st.slider("Select Sample Index for Time-Series Analysis", 0, len(X) - 1, 0)
 
+    # Correlation threshold slider
+    correlation_threshold = st.slider("Select Correlation Threshold for Feature Selection", 0.5, 1.0, 0.85)
+
     if st.button('Analyze Data and Model Insights'):
         # Correlation Heatmap
         st.subheader("Correlation Heatmap")
-        plot_correlation_heatmap(X)
+        plot_correlation_heatmap(X, threshold=correlation_threshold)
 
         # Time-Series Analysis
         st.subheader("Time-Series Analysis")
@@ -456,8 +467,9 @@ elif section == "Advanced Data Analysis and Model Insights":
         st.markdown("""
         **Conclusion:**  
         The visualizations provided here offer insights into data relationships, trends in time-series signals, and the impact of hyperparameter tuning on model performance.  
-        Understanding these factors is essential for improving model accuracy and ensuring the stability of predictions across different configurations.
+        Filtering features based on correlation ensures that the analysis remains efficient while capturing the most relevant insights.
         """)
+
 
 # ---- Statistical Hypothesis Testing ----
 elif section == "Statistical Hypothesis Testing":
