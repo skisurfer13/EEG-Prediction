@@ -38,38 +38,16 @@ The project is designed to:
 ## 🖥️ App Demo
 
 [Launch the Streamlit App](https://eeg-prediction-nnzmjq3bpqkxwbr8zt7unt.streamlit.app/) to explore the interactive visualizations and analyses.
-
-## 📝 Project Structure
-
-- **`display.py`**: Main Streamlit app file.
-- **Data**: EEG data is automatically downloaded and preprocessed for analysis.
-- **Models & Predictions**: Pre-trained models and their predictions are included for demonstration purposes.
-
-## 🚀 Getting Started
-
-To run this project locally, follow these steps:
-
-1. **Clone the repository**:
-    ```bash
-    git clone https://github.com/skisurfer13/EEG-Prediction.git
-    ```
-2. **Install dependencies**:
-    ```bash
-    pip install -r requirements.txt
-    ```
-3. **Run the Streamlit app**:
-    ```bash
-    streamlit run display.py
     ```
 
 ## ⚠️ Known Issues
 
-- The **Advanced Data Analysis and Model Insights** section is under testing and may cause app crashes due to time limitations and resource constraints.
+- The **Advanced Data Analysis and Model Insights** section is under testing and may cause app crashes due to TLEs.
 
 ## 📊 Future Improvements
 
 - Real-time EEG data streaming support.
-- Enhanced model interpretability with additional visual explanations.
+- Enhanced model interpretability with additional visual explanations. Addition of SHAP, LIME and other methods for interpretability analysis. 
 - Integration of additional classification models and advanced ensembling techniques.
 
 ## 🤝 Contributing
