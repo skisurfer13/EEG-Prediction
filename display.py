@@ -395,7 +395,7 @@ elif section == "Advanced Data Analysis and Model Insights":
         corr_matrix = pd.DataFrame(X).corr()
 
         # Filter features with high correlations based on the threshold
-        upper_tri = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(np.bool))
+        upper_tri = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))  # Fixed the deprecated np.bool
         to_drop = [column for column in upper_tri.columns if any(upper_tri[column].abs() > threshold)]
         filtered_corr_matrix = corr_matrix.drop(columns=to_drop, index=to_drop)
 
