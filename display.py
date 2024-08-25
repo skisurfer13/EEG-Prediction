@@ -10,7 +10,7 @@ import os
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import BayesianRidge
 from sklearn.metrics import accuracy_score
-
+from scipy.io import loadmat
 from statsmodels.tsa.stattools import adfuller, kpss
 from scipy.signal import butter, filtfilt, welch
 from scipy.stats import f_oneway
