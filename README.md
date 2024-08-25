@@ -38,7 +38,6 @@ The project is designed to:
 ## 🖥️ App Demo
 
 [Launch the Streamlit App](https://eeg-prediction-nnzmjq3bpqkxwbr8zt7unt.streamlit.app/) to explore the interactive visualizations and analyses.
-    ```
 
 ## ⚠️ Known Issues
 
