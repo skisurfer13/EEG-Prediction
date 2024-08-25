@@ -51,7 +51,7 @@ The project is designed to:
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! 
+Contributions are welcome! Feel free to submit issues, fork the repository, and create pull requests.
 
 ---
 
